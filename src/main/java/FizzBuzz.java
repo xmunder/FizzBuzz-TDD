@@ -11,13 +11,10 @@ public class FizzBuzz {
 
     public static String fizzbuzz(int n) {
 
-        if ( n % 3 == 0 && n % 5 == 0) {
-            return FIZZ + BUZZ;
-        } else if (n % 3 == 0) {
-            return FIZZ;
-        } else if (n % 5 == 0) {
-            return BUZZ;
-        }
-        return String.valueOf(n);
+        String result =
+                (n % 3 == 0 ? FIZZ : "") +
+                (n % 5 == 0 ? BUZZ : "");
+
+        return result.isEmpty() ? String.valueOf(n) : result;
     }
 }
