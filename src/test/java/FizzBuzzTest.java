@@ -1,94 +1,50 @@
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class FizzBuzzTest {
-    @Test
-    void when_NumberIsNotMultipleOf3Or5_Expect_ReturnNumber() {
-        // Arange
-        int input = 1;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("1", result);
+
+    @Nested
+    @DisplayName("Números no divisibles por 3 ni 5")
+    class NonMultiples {
+        @ParameterizedTest(name = "Cuando_{0}_no_es_múltiplo_de_3_ni_5_Espera_{0}")
+        @ValueSource(ints = {1, 2, 4, 7, -1})
+        void returnsNumber(int input) {
+            assertEquals(String.valueOf(input), FizzBuzz.fizzbuzz(input));
+        }
     }
 
-    @Test
-    void when_NumberIsMultipleOf3_Expect_ReturnFizz() {
-        // Arange
-        int input = 3;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("Fizz", result);
-    }
-    
-    @Test
-    void when_NumberIsMultipleOf5_Expect_ReturnBuzz() {
-        // Arange
-        int input = 5;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("Buzz", result);
-    }
-    
-    @Test
-    void when_NumberIsMultipleOf3And5_Expect_ReturnFizzBuzz() {
-        // Arange
-        int input = 15;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("FizzBuzz", result);
-    }
-    
-    @Test
-    void when_NumberIsZero_Expect_ReturnFizzBuzz() {
-        // Arange
-        int input = 0;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("FizzBuzz", result);
-    }
-    
-    @Test
-    void when_NumberIsNegativeMultipleOf3_Expect_ReturnFizz() {
-        // Arange
-        int input = -3;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("Fizz", result);
-    }
-    
-    @Test
-    void when_NumberIsNegativeMultipleOf5_Expect_ReturnBuzz() {
-        // Arange
-        int input = -5;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("Buzz", result);
-    }
-    
-    @Test
-    void when_NumberIsTooBig_Expect_ReturnFizzBuzz() {
-        // Arange
-        int input = 3000000;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("FizzBuzz", result);
+    @Nested
+    @DisplayName("Múltiplos solo de 3")
+    class OnlyThrees {
+        @ParameterizedTest(name = "Cuando_{0}_es_múltiplo_de_3_Espera_Fizz")
+        @ValueSource(ints = {3, 6, -3})
+        void returnsFizz(int input) {
+            assertEquals(FizzBuzz.FIZZ, FizzBuzz.fizzbuzz(input));
+        }
     }
 
-    @Test
-    void when_NegativeNumberIsTooBig_Expect_ReturnFizzBuzz() {
-        // Arange
-        int input = -3000000;
-        // Act
-        String result = FizzBuzz.fizzbuzz(input);
-        // Assert
-        assertEquals("FizzBuzz", result);
+    @Nested
+    @DisplayName("Múltiplos solo de 5")
+    class OnlyFives {
+        @ParameterizedTest(name = "Cuando_{0}_es_múltiplo_de_5_Espera_Buzz")
+        @ValueSource(ints = {5, 10, -5})
+        void returnsBuzz(int input) {
+            assertEquals(FizzBuzz.BUZZ, FizzBuzz.fizzbuzz(input));
+        }
+    }
+
+    @Nested
+    @DisplayName("Múltiplos de 3 y 5 (incluyendo cero y numeros grandes)")
+    class ThreesAndFives {
+        @ParameterizedTest(name = "Cuando_{0}_es_múltiplo_de_3_y_5_Espera_FizzBuzz")
+        @ValueSource(ints = {0, 15, 30, -15, 3000000, -3000000})
+        void returnsFizzBuzz(int input) {
+            assertEquals(FizzBuzz.FIZZ + FizzBuzz.BUZZ, FizzBuzz.fizzbuzz(input));
+        }
     }
 }
+
